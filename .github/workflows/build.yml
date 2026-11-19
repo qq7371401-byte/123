@@ -1,0 +1,32 @@
+# .github/workflows/build.yml
+name: Build Wand-Enhancer
+on:
+  workflow_dispatch: # 手动触发，就是你要的Run workflow按钮
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: 安装Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 安装pnpm
+        run: npm install -g pnpm
+
+      - name: 安装VS构建工具（.NET4.8 + C++ CMake）
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: 执行构建脚本
+        run: .\build.cmd
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: WandEnhancer-Build
+          path: build/
