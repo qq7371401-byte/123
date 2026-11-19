@@ -32,11 +32,14 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Run build.cmd in VS Developer Command Prompt
+      - name: Load MSVC dev environment & Build
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
+
+      - name: Run build.cmd
         run: .\build.cmd
+        shell: cmd
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
