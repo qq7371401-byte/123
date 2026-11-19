@@ -76,12 +76,9 @@
         <Compile Include="Converters\ToVisibilityConverter.cs" />
         <Compile Include="Core\ELogType.cs" />
         <Compile Include="Core\Enhancer.cs" />
-        <Compile Include="Core\EnhancerConfig.cs" />
         <Compile Include="Core\LauncherLog.cs" />
         <Compile Include="Core\Win32Error.cs" />
         <Compile Include="Core\Patching\Shared\PeImage.cs" />
-        <Compile Include="Core\Patching\Shared\ElectronFuseWire.cs" />
-        <Compile Include="Core\Patching\Shared\DiskFusePatch.cs" />
         <Compile Include="Core\Patching\Shared\AuxiliaryCompatibility.cs" />
         <Compile Include="Core\Patching\Shared\IconTransplant.cs" />
         <Compile Include="Core\Patching\Shared\LauncherDeployment.cs" />
