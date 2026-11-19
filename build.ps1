@@ -100,7 +100,7 @@ Invoke-Step 'Test web-panel' {
 }
 
 Invoke-Step 'Restore NuGet packages' {
-    & $msbuild $solutionPath /m /t:Restore /p:RestorePackagesConfig=true
+    & $msbuild $solutionPath /m /t:Restore /p:RestorePackagesConfig=true /p:Platform="Any CPU"
 }
 
 Invoke-Step 'Build solution' {
