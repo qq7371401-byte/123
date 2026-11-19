@@ -1,32 +1,49 @@
-# .github/workflows/build.yml
-name: Build Wand-Enhancer
+name: Build executable
+
 on:
-  workflow_dispatch: # 手动触发，就是你要的Run workflow按钮
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build'
+        required: true
+        default: 'master'
+        type: choice
+        options:
+          - master
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: 检出代码
+      - name: Checkout source
         uses: actions/checkout@v4
         with:
-          submodules: true
+          ref: ${{ github.event.inputs.branch }}
 
-      - name: 安装Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
+          cache: 'pnpm'
 
-      - name: 安装pnpm
+      - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: 安装VS构建工具（.NET4.8 + C++ CMake）
-        uses: ilammy/msvc-dev-cmd@v1
+      - name: Setup CMake
+        uses: ilammy/setup-cmake@v2
+        with:
+          cmake-version: '3.30.0'
 
-      - name: 执行构建脚本
+      - name: Setup MSBuild / Visual Studio Build Tools
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Run build.cmd
         run: .\build.cmd
+        shell: cmd
 
-      - name: 上传产物
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: WandEnhancer-Build
           path: build/
+          retention-days: 90
