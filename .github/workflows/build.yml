@@ -29,17 +29,14 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Setup CMake
-        uses: ilammy/setup-cmake@v2
-        with:
-          cmake-version: '3.30.0'
-
-      - name: Setup MSBuild / Visual Studio Build Tools
+      - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Run build.cmd
+      - name: Run build.cmd in VS Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
         run: .\build.cmd
-        shell: cmd
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
